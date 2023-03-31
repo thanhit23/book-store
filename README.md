@@ -4,7 +4,7 @@
 
 Clone repo
 ```
-git clone [https://github.com/thanhit23/multikart.git](https://github.com/thanhit23/book-store.git)
+git clone https://github.com/thanhit23/book-store.git
 cd book-store
 npm install
 ```
