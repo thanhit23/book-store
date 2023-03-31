@@ -1,15 +1,15 @@
-import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import { useMutation } from 'react-query';
+import { useNavigate } from 'react-router-dom';
+import { bindActionCreators, compose } from 'redux';
 
-import RegisterComponent from '../../components/Register';
+import saga from './saga';
+import { TypeAction } from './types';
+import { formType } from '../Login/types';
+import injectSaga from '../../utils/injectSaga';
 import { register as registerAction } from './actions';
 import { isLoading } from '../LoadingIndicator/actions';
-import injectSaga from '../../utils/injectSaga';
-import saga from './saga';
-import { formType } from '../Login/types';
-import { TypeAction } from './types';
+import RegisterComponent from '../../components/Register';
 
 function Register({ onSubmit, loading }: TypeAction) {
   const redirect = useNavigate();

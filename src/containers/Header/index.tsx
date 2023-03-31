@@ -1,8 +1,9 @@
-import { bindActionCreators, compose } from 'redux';
-import { Logout } from './actions';
 import { connect } from 'react-redux';
-import HeaderComponent from '../../components/Header';
+import { bindActionCreators, compose } from 'redux';
+
 import { Props } from './types';
+import { Logout } from './actions';
+import HeaderComponent from '../../components/Header';
 
 function Header({ auth, logout }: Props) {
   const handleLogout = () => logout();

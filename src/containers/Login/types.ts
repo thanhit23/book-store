@@ -1,4 +1,5 @@
 import { LOGIN_REQUEST } from './constants';
+
 export interface loginAction {
   email: string;
   password: string;

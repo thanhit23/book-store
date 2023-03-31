@@ -1,5 +1,5 @@
-import { ADD_PRODUCT_REQUEST, ADD_PRODUCT_SUCCESS, ADD_PRODUCT_FAILED } from './constants';
 import { AddProductRequest, AddProductSuccess, AddProductFailed } from './types';
+import { ADD_PRODUCT_REQUEST, ADD_PRODUCT_SUCCESS, ADD_PRODUCT_FAILED } from './constants';
 
 export const addProductRequest = (data: object, file: object) =>
   <AddProductRequest>{

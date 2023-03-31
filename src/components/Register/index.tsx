@@ -1,10 +1,11 @@
-import { useForm } from 'react-hook-form';
-import { UserSubmitForm } from './types';
-import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import clx from 'classnames';
-import Header from '../../containers/Header';
 import { Link } from 'react-router-dom';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { UserSubmitForm } from './types';
+import Header from '../../containers/Header';
 
 function Register({ onSubmit }: { onSubmit: (data: object) => void }) {
   const loginValidationSchema = Yup.object().shape({

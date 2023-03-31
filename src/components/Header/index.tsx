@@ -1,4 +1,5 @@
 import { Link } from 'react-router-dom';
+
 import { Props } from './types';
 
 function Header({ auth, logout }: Props) {

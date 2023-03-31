@@ -1,8 +1,9 @@
 import { takeLatest, call, put } from 'redux-saga/effects';
+
 import { ADD_PRODUCT_REQUEST } from './constants';
+import { addProductSuccess, addProductFailed } from './actions';
 import { addProduct as addProductService, uploadFile } from './service';
 import { AddProductRequest, ResponseGenerator, ResponseGeneratorUpload } from './types';
-import { addProductSuccess, addProductFailed } from './actions';
 
 function* addProduct(data: object, files: []) {
   const res: ResponseGenerator = yield call(addProductService, { ...data, images: files });

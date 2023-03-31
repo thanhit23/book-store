@@ -1,8 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+
 import { REGISTER_REQUEST } from './constants';
 import { register as registerService } from './service';
-import { RegisterGenerator, ResponseGenerator } from './types';
 import { registerFailed, registerSuccess } from './actions';
+import { RegisterGenerator, ResponseGenerator } from './types';
 
 function* register({ payload: { data, callback } }: RegisterGenerator) {
   const res: ResponseGenerator = yield call(registerService, data);

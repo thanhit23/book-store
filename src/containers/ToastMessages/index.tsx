@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
+import React, { useEffect } from 'react';
 import { bindActionCreators, compose } from 'redux';
 import { toast, ToastContainer } from 'react-toastify';
 
-import 'react-toastify/dist/ReactToastify.css';
-import { TOAST_ERROR, TOAST_INFO, TOAST_SUCCESS } from './constants';
-import { resetMessage as resetMessageAction } from './actions';
 import { State, ToastAction } from './types';
+import 'react-toastify/dist/ReactToastify.css';
+import { resetMessage as resetMessageAction } from './actions';
+import { TOAST_ERROR, TOAST_INFO, TOAST_SUCCESS } from './constants';
 
 function Toast({ toast: { message, type }, resetMessage }: ToastAction) {
   useEffect(() => {

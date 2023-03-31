@@ -1,31 +1,29 @@
-import ProductDetailComponent from '../../../components/ProductDetail';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-import { useParams } from 'react-router-dom';
-import { getListProduct } from './actions';
-import { useEffect } from 'react';
-import injectSaga from '../../../utils/injectSaga';
+
 import saga from './saga';
+import reducer from './reducer';
 import { Props } from './types';
+import { getListProduct } from './actions';
+import injectSaga from '../../../utils/injectSaga';
 import injectReducer from '../../../utils/injectReducer';
-import reducer from '../List/reducer';
+import ProductList from '../../../components/ProductList';
 
-function ProductDetail({ getProduct, detail }: Props) {
-  const { id } = useParams();
-
+function ListProduct({ getProduct, list }: Props) {
   useEffect(() => {
-    getProduct(id);
+    getProduct();
   }, []);
 
-  return <ProductDetailComponent product={detail} />;
+  return list && <ProductList list={list} />;
 }
 
 const mapStateToProps = (state: any) => {
   const {
-    product: { detail },
+    product: { list },
   } = state;
   return {
-    detail,
+    list,
   };
 };
 
@@ -38,4 +36,4 @@ const withSaga = injectSaga({ key: 'product', saga });
 // @ts-ignore
 const withReducer = injectReducer({ key: 'product', reducer });
 
-export default compose(withReducer, withSaga, withConnect)(ProductDetail);
+export default compose(withReducer, withSaga, withConnect)(ListProduct);

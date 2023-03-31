@@ -1,10 +1,10 @@
 import produce from 'immer';
 
+import { LOGOUT } from '../Header/constants';
 import { LOGIN_SUCCESS } from '../Login/constants';
 import { IS_LOADING } from '../LoadingIndicator/constants';
-import { TOAST_ERROR, RESET_MESSAGE } from '../ToastMessages/constants';
 import { SET_AUTHENTICATION } from '../Authenticated/constants';
-import { LOGOUT } from '../Header/constants';
+import { TOAST_ERROR, RESET_MESSAGE } from '../ToastMessages/constants';
 
 export const initialState = {
   auth: null,
