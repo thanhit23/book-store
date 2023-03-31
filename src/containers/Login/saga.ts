@@ -4,9 +4,9 @@ import { LOGIN_REQUEST, STATUS_SUCCESS } from './constants';
 
 import { login, setToken } from './service';
 import { loginSuccess, loginFailed } from './actions';
-import { fetchLoginType, ResponseGenerator } from './types';
+import { FetchLoginType, ResponseGenerator } from './types';
 
-function* fetchLogin({ payload: { email, password } }: fetchLoginType) {
+function* fetchLogin({ payload: { email, password, callback } }: FetchLoginType) {
   const res: ResponseGenerator = yield call(login, { email, password });
   const { data, status } = res;
 
@@ -17,18 +17,18 @@ function* fetchLogin({ payload: { email, password } }: fetchLoginType) {
         user,
       },
     } = data;
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('token') || '';
 
-    // @ts-ignore
     yield call(setToken, token);
     yield put(loginSuccess(access, refresh, user));
+    callback();
   } else {
+    console.log(data);
     yield put(loginFailed(data));
   }
 }
 
 function* loginSaga() {
-  // @ts-ignore
   yield takeLatest(LOGIN_REQUEST, fetchLogin);
 }
 

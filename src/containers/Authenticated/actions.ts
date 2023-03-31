@@ -1,5 +1,6 @@
-import { CHECK_TOKEN_REQUEST, CHECK_TOKEN_SUCCESS, CHECK_TOKEN_FAILED, REDIRECT_LOGIN } from './constants';
+import { CHECK_TOKEN_REQUEST, CHECK_TOKEN_SUCCESS, CHECK_TOKEN_FAILED, REDIRECT_LOGIN, NOT_AUTH } from './constants';
 import { SET_AUTHENTICATION } from './constants';
+import { NotAuth } from './types';
 
 export const sendRequestToken = (token: string) => ({
   type: CHECK_TOKEN_REQUEST,
@@ -10,6 +11,13 @@ export const sendRequestToken = (token: string) => ({
 
 export const redirectLogin = () => ({
   type: REDIRECT_LOGIN,
+});
+
+export const notAuth = (callback: () => void): NotAuth => ({
+  type: NOT_AUTH,
+  payload: {
+    callback,
+  },
 });
 
 export const setAuth = (user: object) => ({

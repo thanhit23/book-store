@@ -1,12 +1,16 @@
+import { LOGIN_REQUEST } from './constants';
 export interface loginAction {
   email: string;
   password: string;
+  callback: () => void;
 }
 
-export interface fetchLoginType {
+export interface FetchLoginType {
+  type: typeof LOGIN_REQUEST;
   payload: {
     email: string;
     password: string;
+    callback: () => void;
   };
 }
 

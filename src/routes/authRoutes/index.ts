@@ -1,3 +1,3 @@
-import HomePage from '../../containers/Home';
+import AddProduct from '../../containers/Product/AddProduct';
 
-export default [{ path: '/user', component: HomePage, exact: true, index: true }];
+export default [{ path: '/add-product', component: AddProduct, index: true }];
