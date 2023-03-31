@@ -1,9 +1,9 @@
 import { loginAction } from './types';
 import { LOGIN_REQUEST, LOGIN_FAILED, LOGIN_SUCCESS } from './constants';
 
-export const login = ({ email, password }: loginAction) => ({
+export const login = ({ email, password, callback }: loginAction) => ({
   type: LOGIN_REQUEST,
-  payload: { email, password },
+  payload: { email, password, callback },
 });
 
 export const loginSuccess = (access: string, refresh: string, user: object) => ({

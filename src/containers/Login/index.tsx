@@ -1,6 +1,7 @@
 import { useMutation } from 'react-query';
 import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 import saga from './saga';
 import reducer from '../App/reducer';
@@ -12,10 +13,13 @@ import { login as loginAction } from './actions';
 import injectReducer from '../../utils/injectReducer';
 
 function Login({ onLogin, loading }: login) {
+  const redirect = useNavigate();
+  const callback = () => redirect('/');
+
   const { mutate, isLoading } = useMutation({
     // @ts-ignore
     mutationFn: (body: formType) => {
-      onLogin(body);
+      onLogin({ ...body, callback });
     },
   });
 

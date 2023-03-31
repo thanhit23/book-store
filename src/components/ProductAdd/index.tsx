@@ -1,0 +1,115 @@
+import * as Yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import { PropsAddProduct, HandleSubmitType } from '../../containers/Product/AddProduct/types';
+import Header from '../../containers/Header';
+
+function AddProduct({ onSubmit }: PropsAddProduct) {
+  const loginValidationSchema = Yup.object().shape({
+    name: Yup.string().required(),
+    price: Yup.number().required(),
+    discount: Yup.number().required(),
+    file: Yup.mixed().test('required', 'You need to provide a file', file => !!file),
+  });
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<HandleSubmitType>({
+    mode: 'onChange',
+    resolver: yupResolver(loginValidationSchema),
+  });
+
+  const { name, price, discount, file } = errors;
+
+  const handleSubmitForm = (data: HandleSubmitType) => {
+    onSubmit(data);
+  };
+
+  return (
+    <>
+      <Header />
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+        <div className="font-sans antialiased bg-grey-lightest">
+          <div className="w-full bg-grey-lightest" style={{ paddingTop: '4rem' }}>
+            <div className="container mx-auto py-8">
+              <div className="w-5/6 lg:w-1/2 mx-auto bg-white rounded shadow">
+                <div className="py-4 px-8 text-black text-xl border-b border-grey-lighter">Add Product</div>
+                <div className="py-4 px-8">
+                  <form onSubmit={handleSubmit(data => handleSubmitForm(data))}>
+                    <div className="mb-4">
+                      <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="name">
+                        Name
+                      </label>
+                      <input
+                        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                        id="name"
+                        type="text"
+                        placeholder="Your product name"
+                        {...register('name')}
+                      />
+                      <span className="text-red-500">{name?.message}</span>
+                    </div>
+                    <div className="mb-4">
+                      <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="file_input">
+                        Upload file
+                      </label>
+                      <input
+                        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                        id="file_input"
+                        type="file"
+                        multiple
+                        {...register('file')}
+                      />
+                      <span className="text-red-500">{file?.message}</span>
+                    </div>
+                    <div className="flex mb-4">
+                      <div className="w-1/2 mr-1">
+                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="price">
+                          Price
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="price"
+                          type="number"
+                          placeholder="Price for product"
+                          {...register('price')}
+                        />
+                        <span className="text-red-500">{price?.message}</span>
+                      </div>
+                      <div className="w-1/2 ml-1">
+                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="discount">
+                          Discount
+                        </label>
+                        <input
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="discount"
+                          type="number"
+                          placeholder="Discount for product"
+                          {...register('discount')}
+                        />
+                        <span className="text-red-500">{discount?.message}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center justify-between mt-8">
+                      <button
+                        className="bg-blue-700 hover:bg-blue-dark text-white font-bold py-2 px-4 rounded-full"
+                        type="submit"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+export default AddProduct;

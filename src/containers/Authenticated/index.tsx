@@ -18,8 +18,8 @@ function Authenticated({ auth, children, onSendRequestToken, notToken }: Props) 
     }
   }, []);
 
-  if (token && auth) return children;
-  return children;
+  if (token && auth?.admin) return children;
+  return (window.location.href = '/login');
 }
 
 const mapStateToProps = (state: States) => {

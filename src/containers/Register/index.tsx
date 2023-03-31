@@ -13,15 +13,16 @@ import { TypeAction } from './types';
 
 function Register({ onSubmit, loading }: TypeAction) {
   const redirect = useNavigate();
+  const callback = () => redirect('/login');
 
   const { mutate, isLoading } = useMutation({
     // @ts-ignore
+    mutationKey: 'register',
     mutationFn: (body: formType) => {
       onSubmit(body, callback);
     },
   });
 
-  const callback = () => redirect('/');
   const handleSubmit = (data: object) => {
     loading(isLoading);
     mutate(data);

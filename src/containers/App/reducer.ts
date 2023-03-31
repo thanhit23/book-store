@@ -3,6 +3,8 @@ import produce from 'immer';
 import { LOGIN_SUCCESS } from '../Login/constants';
 import { IS_LOADING } from '../LoadingIndicator/constants';
 import { TOAST_ERROR, RESET_MESSAGE } from '../ToastMessages/constants';
+import { SET_AUTHENTICATION } from '../Authenticated/constants';
+import { LOGOUT } from '../Header/constants';
 
 export const initialState = {
   auth: null,
@@ -33,6 +35,21 @@ const appReducer = (state = initialState, action: Action) =>
           draft.auth = user;
         }
         break;
+      case LOGOUT:
+        {
+          localStorage.removeItem('token');
+          localStorage.removeItem('refresh');
+          draft.auth = null;
+        }
+        break;
+      case SET_AUTHENTICATION:
+        {
+          const {
+            payload: { user },
+          } = action;
+          draft.auth = user;
+        }
+        break;
       case IS_LOADING:
         {
           const {
@@ -49,9 +66,7 @@ const appReducer = (state = initialState, action: Action) =>
           const text = action.type;
           if (text.includes('_FAILED')) {
             const {
-              payload: {
-                data: { message },
-              },
+              payload: { message },
             } = action;
             draft.toast.type = TOAST_ERROR;
             draft.toast.message = message;
