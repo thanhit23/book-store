@@ -1,11 +1,12 @@
-import AddProductComponent from '../../../components/ProductAdd';
-import { bindActionCreators, compose } from 'redux';
-import { addProductRequest as addProductAction } from './actions';
-import { isLoading } from '../../LoadingIndicator/actions';
 import { connect } from 'react-redux';
-import injectSaga from '../../../utils/injectSaga';
+import { bindActionCreators, compose } from 'redux';
+
 import saga from './saga';
+import injectSaga from '../../../utils/injectSaga';
+import { isLoading } from '../../LoadingIndicator/actions';
 import { HandleSubmitType, PropsAddProduct } from './types';
+import AddProductComponent from '../../../components/ProductAdd';
+import { addProductRequest as addProductAction } from './actions';
 
 function AddProduct({ onSubmit }: PropsAddProduct) {
   const handleSubmitForm = (data: HandleSubmitType) => {

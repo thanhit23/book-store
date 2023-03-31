@@ -1,16 +1,16 @@
-import { useMutation } from 'react-query';
-import { bindActionCreators, compose } from 'redux';
 import { connect } from 'react-redux';
+import { useMutation } from 'react-query';
 import { useNavigate } from 'react-router-dom';
+import { bindActionCreators, compose } from 'redux';
 
 import saga from './saga';
 import reducer from '../App/reducer';
 import { login, formType } from './types';
-import { isLoading } from '../LoadingIndicator/actions';
 import LoginPage from '../../components/Login';
 import injectSaga from '../../utils/injectSaga';
 import { login as loginAction } from './actions';
 import injectReducer from '../../utils/injectReducer';
+import { isLoading } from '../LoadingIndicator/actions';
 
 function Login({ onLogin, loading }: login) {
   const redirect = useNavigate();

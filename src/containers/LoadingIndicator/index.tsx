@@ -1,8 +1,8 @@
-import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { connect } from 'react-redux';
 
-import Loadings from '../../components/Loading';
 import { Props, States } from './types';
+import Loadings from '../../components/Loading';
 
 function Loading({ showLoading }: Props) {
   return showLoading ? <Loadings /> : <></>;

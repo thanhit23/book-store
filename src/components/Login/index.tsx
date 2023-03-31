@@ -3,8 +3,8 @@ import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { SignInTypes, UserSubmitForm } from './types';
 import Header from '../../containers/Header';
+import { SignInTypes, UserSubmitForm } from './types';
 
 function Login({ onSubmit }: SignInTypes) {
   const loginValidationSchema = Yup.object().shape({

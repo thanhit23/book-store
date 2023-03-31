@@ -2,8 +2,8 @@ import * as Yup from 'yup';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
-import { PropsAddProduct, HandleSubmitType } from '../../containers/Product/AddProduct/types';
 import Header from '../../containers/Header';
+import { PropsAddProduct, HandleSubmitType } from '../../containers/Product/AddProduct/types';
 
 function AddProduct({ onSubmit }: PropsAddProduct) {
   const loginValidationSchema = Yup.object().shape({

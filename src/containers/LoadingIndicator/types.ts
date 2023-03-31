@@ -1,4 +1,5 @@
 import { IS_LOADING } from './constants';
+
 export interface Props {
   showLoading: boolean;
 }

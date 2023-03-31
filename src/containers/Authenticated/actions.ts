@@ -1,6 +1,6 @@
-import { CHECK_TOKEN_REQUEST, CHECK_TOKEN_SUCCESS, CHECK_TOKEN_FAILED, REDIRECT_LOGIN, NOT_AUTH } from './constants';
-import { SET_AUTHENTICATION } from './constants';
 import { NotAuth } from './types';
+import { SET_AUTHENTICATION } from './constants';
+import { CHECK_TOKEN_REQUEST, CHECK_TOKEN_SUCCESS, CHECK_TOKEN_FAILED, REDIRECT_LOGIN, NOT_AUTH } from './constants';
 
 export const sendRequestToken = (token: string) => ({
   type: CHECK_TOKEN_REQUEST,

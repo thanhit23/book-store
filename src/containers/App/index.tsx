@@ -3,8 +3,8 @@ import { useRoutes } from 'react-router-dom';
 
 import './styles.css';
 import routes from '../../routes';
-import LoadingIndicator from '../LoadingIndicator';
 import ToastMessages from '../ToastMessages';
+import LoadingIndicator from '../LoadingIndicator';
 
 function App() {
   return (
