@@ -23,8 +23,8 @@ function* fetchLogin({ payload: { email, password, callback } }: FetchLoginType)
     yield put(loginSuccess(access, refresh, user));
     callback();
   } else {
-    console.log(data);
-    yield put(loginFailed(data));
+    const { message } = data;
+    yield put(loginFailed(message));
   }
 }
 

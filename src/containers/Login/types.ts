@@ -21,6 +21,7 @@ export interface ResponseGenerator {
       tokens: { access: string; refresh: string };
       user: object;
     };
+    message: string;
   };
   status: number;
 }

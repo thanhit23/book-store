@@ -15,7 +15,14 @@ function ListProduct({ getProduct, list }: Props) {
     getProduct();
   }, []);
 
-  return list && <ProductList list={list} />;
+  return (
+    <div className="mt-4 flex items-center justify-center flex-col">
+      <h2 className="text-xl font-bold">Product</h2>
+      <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
+        {list && <ProductList list={list} />}
+      </section>
+    </div>
+  );
 }
 
 const mapStateToProps = (state: any) => {

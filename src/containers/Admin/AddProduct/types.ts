@@ -1,6 +1,10 @@
 import { ADD_PRODUCT_REQUEST, ADD_PRODUCT_FAILED, ADD_PRODUCT_SUCCESS } from './constants';
 
 export interface PropsAddProduct {
+  onSubmit: (data: SubmitDataType, callback: () => void) => void;
+}
+
+export interface PropsAddProductComponent {
   onSubmit: (data: SubmitDataType) => void;
 }
 
@@ -27,6 +31,7 @@ export interface AddProductRequest {
       price: number;
       name: string;
     };
+    callback: () => void;
   };
 }
 
@@ -40,7 +45,7 @@ export interface AddProductFailed {
 }
 
 export interface ResponseGeneratorUpload {
-  data: [];
+  data: { data: [] };
   status: boolean;
 }
 

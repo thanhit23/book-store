@@ -3,9 +3,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Header from '../../containers/Header';
-import { PropsAddProduct, HandleSubmitType } from '../../containers/Product/AddProduct/types';
+import { HandleSubmitType, PropsAddProductComponent } from '../../containers/Admin/AddProduct/types';
+import Navigation from '../Admin/Navigation';
 
-function AddProduct({ onSubmit }: PropsAddProduct) {
+function AddProduct({ onSubmit }: PropsAddProductComponent) {
   const loginValidationSchema = Yup.object().shape({
     name: Yup.string().required(),
     price: Yup.number().required(),
@@ -31,6 +32,7 @@ function AddProduct({ onSubmit }: PropsAddProduct) {
   return (
     <>
       <Header />
+      <Navigation />
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
         <div className="font-sans antialiased bg-grey-lightest">
           <div className="w-full bg-grey-lightest" style={{ paddingTop: '4rem' }}>

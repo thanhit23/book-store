@@ -3,6 +3,10 @@
 @tailwind utilities;
 
 @layer components {
+    body {
+        background-color: #F6F9FC;
+    }
+
     .lds-ring {
         display: inline-block;
         position: relative;

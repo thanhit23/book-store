@@ -9,16 +9,18 @@ export default function ProductList({ list }: { list: [] }) {
         <div key={i} className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
           <Link to={`/product/${_id}`}>
             <img
-              src={`https://multikart-upload.glitch.me${images[0]}`}
+              src={`https://multikart-upload.glitch.me${images}`}
               alt="Product"
-              className="h-80 w-72 object-cover rounded-t-xl"
+              className="h-[320px] w-[225px] object-cover my-[25px] mx-[auto]"
             />
             <div className="px-4 py-3 w-72">
               <p className="text-lg font-bold text-black truncate block capitalize">{name}</p>
               <div className="flex items-center">
                 <p className="text-lg font-semibold text-black cursor-auto my-3">{formatMoney(price)}VNĐ</p>
                 <del>
-                  <p className="text-sm text-gray-600 cursor-auto ml-2">{formatMoney(price * discount)}</p>
+                  <p className="text-sm text-gray-600 cursor-auto ml-2">
+                    {formatMoney(price + (price * discount) / 100)}VNĐ
+                  </p>
                 </del>
                 <div className="ml-auto">
                   <svg
