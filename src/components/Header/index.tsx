@@ -8,23 +8,12 @@ function Header({ auth, logout }: Props) {
     <div className="bg-white shadow-sm sticky top-0 z-[100]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-4">
         <div className="flex items-center justify-between md:justify-start">
-          <button type="button" className="md:hidden w-10 h-10 rounded-lg -ml-2 flex justify-center items-center">
-            <svg
-              className="text-gray-500 w-6 h-6"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
           <Link to="/" className="font-bold text-gray-700 text-2xl">
             Shop
           </Link>
           {auth?.admin ? (
-            <Link to="/add-product" className="ml-3 font-bold text-gray-700 text-2xl">
-              Add Product
+            <Link to="/admin" className="ml-3 font-bold text-gray-700 text-2xl">
+              Admin
             </Link>
           ) : (
             ''

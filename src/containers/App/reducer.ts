@@ -64,6 +64,8 @@ const appReducer = (state = initialState, action: Action) =>
       default:
         {
           const text = action.type;
+
+          draft.loading.showLoading = text.includes('_REQUEST');
           if (text.includes('_FAILED')) {
             const {
               payload: { message },

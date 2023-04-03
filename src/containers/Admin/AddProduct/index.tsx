@@ -7,11 +7,12 @@ import { isLoading } from '../../LoadingIndicator/actions';
 import { HandleSubmitType, PropsAddProduct } from './types';
 import AddProductComponent from '../../../components/ProductAdd';
 import { addProductRequest as addProductAction } from './actions';
+import { useNavigate } from 'react-router-dom';
 
 function AddProduct({ onSubmit }: PropsAddProduct) {
-  const handleSubmitForm = (data: HandleSubmitType) => {
-    onSubmit(data);
-  };
+  const redirect = useNavigate();
+  const callback = () => redirect('/admin');
+  const handleSubmitForm = (data: HandleSubmitType) => onSubmit(data, callback);
 
   return <AddProductComponent onSubmit={handleSubmitForm} />;
 }

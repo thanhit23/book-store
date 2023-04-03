@@ -11,7 +11,7 @@ export const loginSuccess = (access: string, refresh: string, user: object) => (
   payload: { access, refresh, user },
 });
 
-export const loginFailed = (data: object) => ({
+export const loginFailed = (message: string) => ({
   type: LOGIN_FAILED,
-  payload: { data },
+  payload: { message },
 });

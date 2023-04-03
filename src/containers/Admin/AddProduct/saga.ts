@@ -5,10 +5,11 @@ import { addProductSuccess, addProductFailed } from './actions';
 import { addProduct as addProductService, uploadFile } from './service';
 import { AddProductRequest, ResponseGenerator, ResponseGeneratorUpload } from './types';
 
-function* addProduct(data: object, files: []) {
+function* addProduct(data: object, files: [], callback: () => void) {
   const res: ResponseGenerator = yield call(addProductService, { ...data, images: files });
   const { status, data: dataRes } = res;
   if (status) {
+    callback();
     yield put(addProductSuccess());
   } else {
     const { message } = dataRes;
@@ -16,12 +17,15 @@ function* addProduct(data: object, files: []) {
   }
 }
 
-function* handleAddProduct({ payload: { data } }: AddProductRequest) {
+function* handleAddProduct({ payload: { data, callback } }: AddProductRequest) {
   const { file } = data;
   const res: ResponseGeneratorUpload = yield call(uploadFile, file);
-  const { status, data: files } = res;
+  const {
+    status,
+    data: { data: files },
+  } = res;
   if (status) {
-    yield addProduct(data, files);
+    yield addProduct(data, files, callback);
   }
 }
 

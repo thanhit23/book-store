@@ -9,7 +9,6 @@ function* getProductDetail({ payload: { id } }: GetProductDetailType) {
   const res: ResponseGenerator = yield call(getProduct, id);
 
   const { status, data } = res;
-  console.log(data);
 
   if (status) {
     yield put(getListProductSuccess(data.data));
