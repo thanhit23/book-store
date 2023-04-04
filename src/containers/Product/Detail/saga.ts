@@ -2,7 +2,7 @@ import { call, put, takeLatest } from 'redux-saga/effects';
 
 import { getProduct, addComment, getComments } from './service';
 import { GET_PRODUCT_REQUEST, ADD_COMMENT_REQUEST, GET_LIST_COMMENT_REQUEST } from './constants';
-import { ResponseGenerator, GetProductDetailType, AddCommentProductType } from './types';
+import { ResponseGenerator, GetProductDetailType, AddCommentProductType, GetListCommentType } from './types';
 import {
   getListProductFailed,
   getListProductSuccess,
@@ -39,11 +39,6 @@ function* addCommentProduct({ payload: { data: dataComment, callback } }: AddCom
   } else {
     yield put(commentProductFailed());
   }
-}
-
-export interface GetListCommentType {
-  type: typeof GET_LIST_COMMENT_REQUEST;
-  payload: { id: string };
 }
 
 function* getListComment({ payload: { id } }: GetListCommentType) {

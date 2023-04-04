@@ -1,8 +1,9 @@
-import { createStore, compose, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 import createSagaMiddleware from 'redux-saga';
+import { createStore, compose, applyMiddleware } from 'redux';
 
 import createReducer from './reducers';
+import { InjectedStore } from './common/types';
 import middlewareStorage from './middleware/apiMiddleware';
 
 export default function configureStore(initialState = {}) {
@@ -32,18 +33,11 @@ export default function configureStore(initialState = {}) {
   // @ts-ignore
   const enhancer = [applyMiddleware(...middlewares)];
 
-  const store = createStore(
-    createReducer(),
-    initialState,
-    // @ts-ignore
-    composeEnhancers(...enhancer),
-  );
-  // @ts-ignore
+  const store = createStore(createReducer(), initialState, composeEnhancers(...enhancer)) as InjectedStore;
+
   store.runSaga = sagaMiddleware.run;
-  // @ts-ignore
-  store.injectedReducers = {}; // Reducer registry
-  // @ts-ignore
-  store.injectedSagas = {}; // Saga registry
+  store.injectedReducers = {};
+  store.injectedSagas = {};
 
   return store;
 }

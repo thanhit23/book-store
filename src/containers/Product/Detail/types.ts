@@ -79,3 +79,8 @@ export interface GetProductDetailType {
   type: typeof GET_PRODUCT_REQUEST;
   payload: { id: string };
 }
+
+export interface GetListCommentType {
+  type: typeof GET_LIST_COMMENT_REQUEST;
+  payload: { id: string };
+}

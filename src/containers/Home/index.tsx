@@ -3,6 +3,7 @@ import 'react-slideshow-image/dist/styles.css';
 
 import Header from '../Header';
 import ListProduct from '../Product/List';
+import Service from '../../components/Service';
 
 function Home() {
   const images = [
@@ -30,6 +31,7 @@ function Home() {
           </div>
         </div>
       </Slide>
+      <Service />
       <ListProduct />
       <footer className="bg-white dark:bg-gray-900">
         <div className="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
