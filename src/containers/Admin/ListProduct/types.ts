@@ -48,3 +48,16 @@ export interface DeleteProductFailed {
   type: typeof DELETE_PRODUCT_ADMIN_FAILED;
   payload: { message: string };
 }
+
+export interface ResponseGenerator {
+  data: {
+    data: [];
+    status: boolean;
+    message: string;
+  };
+}
+
+export interface Action {
+  type: typeof DELETE_PRODUCT_ADMIN_REQUEST;
+  payload: { id: string };
+}

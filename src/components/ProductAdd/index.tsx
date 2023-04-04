@@ -10,7 +10,7 @@ function AddProduct({ onSubmit }: PropsAddProductComponent) {
   const loginValidationSchema = Yup.object().shape({
     name: Yup.string().required('Field is required'),
     price: Yup.number().required('Field is required'),
-    discount: Yup.number().required('Field is required'),
+    discount: Yup.number().required('Field is required').min(0).max(100),
     description: Yup.string().required('Field is required'),
     file: Yup.mixed().test('required', 'You need to provide a file', file => !!file),
   });
@@ -57,13 +57,12 @@ function AddProduct({ onSubmit }: PropsAddProductComponent) {
                     </div>
                     <div className="mb-4">
                       <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="file_input">
-                        Upload file
+                        Image
                       </label>
                       <input
                         className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
                         id="file_input"
                         type="file"
-                        multiple
                         {...register('file')}
                       />
                       <span className="text-red-500">{file?.message}</span>
@@ -95,19 +94,19 @@ function AddProduct({ onSubmit }: PropsAddProductComponent) {
                         />
                         <span className="text-red-500">{discount?.message}</span>
                       </div>
-                      <div className="mb-4">
-                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="description">
-                          Description
-                        </label>
-                        <textarea
-                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
-                          id="description"
-                          rows={6}
-                          placeholder="Your product description"
-                          {...register('description')}
-                        />
-                        <span className="text-red-500">{description?.message}</span>
-                      </div>
+                    </div>
+                    <div className="mb-4">
+                      <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="description">
+                        Description
+                      </label>
+                      <textarea
+                        className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                        id="description"
+                        rows={6}
+                        placeholder="Your product description"
+                        {...register('description')}
+                      />
+                      <span className="text-red-500">{description?.message}</span>
                     </div>
                     <div className="flex items-center justify-between mt-8">
                       <button

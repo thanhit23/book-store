@@ -14,9 +14,6 @@ function Navigation() {
           <Link to="/admin/comment" className="font-bold text-gray-700 text-sm mr-3">
             List Comment
           </Link>
-          <Link to="/admin/add-comment" className="font-bold text-gray-700 text-sm mr-3">
-            Add Comment
-          </Link>
         </div>
       </div>
     </div>
