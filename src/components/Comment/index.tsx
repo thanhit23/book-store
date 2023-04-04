@@ -10,6 +10,7 @@ function Comment({ onSubmit, listComment }: Props) {
   });
 
   const {
+    reset,
     register,
     handleSubmit,
     formState: { errors },
@@ -22,6 +23,7 @@ function Comment({ onSubmit, listComment }: Props) {
 
   const handleSubmitForm = (data: object) => {
     onSubmit(data);
+    reset({ content: '' });
   };
 
   const renderComment = () =>

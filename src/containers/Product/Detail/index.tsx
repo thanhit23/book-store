@@ -20,9 +20,10 @@ import ProductDetailComponent from '../../../components/ProductDetail';
 function ProductDetail({ getProduct, detail, auth, comment, commentProduct, getListComment }: Props) {
   const { id = '' } = useParams();
   const redirect = useNavigate();
-  const callback = () => redirect(`/product/${id}`);
+  const callback = () => getListComment(id);
 
   useEffect(() => {
+    console.log(12312312);
     getProduct(id);
     getListComment(id);
   }, []);
