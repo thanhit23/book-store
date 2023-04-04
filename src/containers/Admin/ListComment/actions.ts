@@ -31,9 +31,10 @@ export const getListCommentFailed = () =>
     type: GET_LIST_COMMENT_ADMIN_FAILED,
   };
 
-export const deleteComment = () =>
+export const deleteComment = (id: string) =>
   <DeleteComment>{
     type: DELETE_COMMENT_ADMIN_REQUEST,
+    payload: { id },
   };
 
 export const deleteCommentSuccess = () =>

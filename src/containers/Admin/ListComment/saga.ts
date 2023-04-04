@@ -28,6 +28,7 @@ function* deleteComment({ payload: { id } }: DeleteCommentAction) {
 
   if (status) {
     yield put(deleteCommentSuccess());
+    yield put({ type: GET_LIST_COMMENT_ADMIN_REQUEST });
   } else {
     yield put(deleteCommentFailed(message));
   }
