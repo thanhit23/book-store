@@ -1,20 +1,9 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
+
+import { ResponseGenerator, Action } from './types';
 import { DELETE_PRODUCT_ADMIN_REQUEST, GET_LIST_PRODUCT_ADMIN_REQUEST } from './constants';
 import { getListProduct as getListProductService, deleteProduct as deleteProductService } from './service';
 import { getListProductSuccess, getListProductFailed, deleteProductSuccess, deleteProductFailed } from './actions';
-
-export interface ResponseGenerator {
-  data: {
-    data: [];
-    status: boolean;
-    message: string;
-  };
-}
-
-export interface Action {
-  type: typeof DELETE_PRODUCT_ADMIN_REQUEST;
-  payload: { id: string };
-}
 
 function* getListProduct() {
   const res: ResponseGenerator = yield call(getListProductService);

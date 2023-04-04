@@ -1,24 +1,22 @@
-import { useEffect } from 'react';
-import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-
-import saga from './saga';
-import { States, Props } from './types';
+import { sendRequestToken } from '../Authenticated/actions';
+import { connect } from 'react-redux';
 import injectSaga from '../../utils/injectSaga';
-import { sendRequestToken, redirectLogin } from './actions';
+import saga from '../Authenticated/saga';
+import { States } from '../Authenticated/types';
+import { useEffect } from 'react';
+import { Props } from './types';
 
-function Authenticated({ auth, children, onSendToken, notToken }: Props) {
+function MainLayout({ children, onSendToken }: Props) {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
     if (token) {
       onSendToken(token);
-    } else {
-      notToken();
     }
   }, []);
 
-  if (token && auth?.admin) return children;
+  return children;
 }
 
 const mapStateToProps = (state: States) => {
@@ -32,9 +30,9 @@ const mapStateToProps = (state: States) => {
 
 const mapDispatchToProps = (dispatch: any) => ({
   onSendToken: bindActionCreators(sendRequestToken, dispatch),
-  notToken: bindActionCreators(redirectLogin, dispatch),
 });
+
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 const withSaga = injectSaga({ key: 'authenticated', saga });
 
-export default compose(withSaga, withConnect)(Authenticated);
+export default compose(withSaga, withConnect)(MainLayout);

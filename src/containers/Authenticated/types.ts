@@ -2,7 +2,7 @@ import { NOT_AUTH } from './constants';
 export interface Props {
   auth?: { admin: boolean };
   children: JSX.Element;
-  onSendRequestToken: (token: string) => void;
+  onSendToken: (token: string) => void;
   notToken: () => void;
 }
 
