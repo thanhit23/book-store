@@ -4,7 +4,8 @@ import { LOGOUT } from '../Header/constants';
 import { LOGIN_SUCCESS } from '../Login/constants';
 import { IS_LOADING } from '../LoadingIndicator/constants';
 import { SET_AUTHENTICATION } from '../Authenticated/constants';
-import { TOAST_ERROR, RESET_MESSAGE } from '../ToastMessages/constants';
+import { TOAST_ERROR, RESET_MESSAGE, TOAST_SUCCESS } from '../ToastMessages/constants';
+import { ADD_COMMENT_SUCCESS } from '../Product/Detail/constants';
 
 export const initialState = {
   auth: null,
@@ -61,10 +62,19 @@ const appReducer = (state = initialState, action: Action) =>
       case RESET_MESSAGE:
         draft.toast.message = null;
         break;
+      case ADD_COMMENT_SUCCESS:
+        {
+          const {
+            payload: { message },
+          } = action;
+          draft.toast.message = message;
+          draft.loading.showLoading = false;
+          draft.toast.type = TOAST_SUCCESS;
+        }
+        break;
       default:
         {
           const text = action.type;
-
           draft.loading.showLoading = text.includes('_REQUEST');
           if (text.includes('_FAILED')) {
             const {
