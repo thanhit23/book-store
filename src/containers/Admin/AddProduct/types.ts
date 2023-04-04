@@ -13,6 +13,7 @@ export interface HandleSubmitType {
   discount: number;
   price: number;
   name: string;
+  description: string;
 }
 
 export interface SubmitDataType {
@@ -20,6 +21,7 @@ export interface SubmitDataType {
   discount: number;
   price: number;
   name: string;
+  description: string;
 }
 
 export interface AddProductRequest {
@@ -30,6 +32,7 @@ export interface AddProductRequest {
       discount: number;
       price: number;
       name: string;
+      description: string;
     };
     callback: () => void;
   };

@@ -16,11 +16,15 @@ function ListProduct({ getProduct, list }: Props) {
   }, []);
 
   return (
-    <div className="mt-4 flex items-center justify-center flex-col">
-      <h2 className="text-xl font-bold">Product</h2>
-      <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-14 mt-10 mb-5">
-        {list && <ProductList list={list} />}
-      </section>
+    <div className="my-20 flex items-center justify-center flex-col">
+      <div className="shadow-[rgba(100,100,111,0.2)_0px_7px_29px_0px] w-[1200px] rounded">
+        <div className="p-10">
+          <h2 className="text-xl font-bold">Product</h2>
+        </div>
+        <section className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-4 md:grid-cols-2 justify-items-center justify-center gap-y-20 gap-x-4 mb-10">
+          {list && <ProductList list={list} />}
+        </section>
+      </div>
     </div>
   );
 }

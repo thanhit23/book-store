@@ -6,38 +6,21 @@ export default function ProductList({ list }: { list: [] }) {
   return (
     <>
       {list.map(({ name, price, images, discount, _id }, i) => (
-        <div key={i} className="w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl">
+        <div
+          key={i}
+          className="w-64 bg-white shadow-[rgba(0,0,0,0.16)_0px_1px_4px] rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+        >
           <Link to={`/product/${_id}`}>
-            <img
-              src={`https://multikart-upload.glitch.me${images}`}
-              alt="Product"
-              className="h-[320px] w-[225px] object-cover my-[25px] mx-[auto]"
-            />
-            <div className="px-4 py-3 w-72">
-              <p className="text-lg font-bold text-black truncate block capitalize">{name}</p>
+            <img src={`https://multikart-upload.glitch.me${images}`} alt="Product" className=" m-0" />
+            <div className="px-4 py-3 w-64">
+              <p className="text-[14px] text-[#808191] capitalize line-clamp-2">{name}</p>
               <div className="flex items-center">
-                <p className="text-lg font-semibold text-black cursor-auto my-3">{formatMoney(price)}VNĐ</p>
+                <p className="text-[14px] font-semibold text-[#c92127] cursor-auto my-3">{formatMoney(price)} VNĐ</p>
                 <del>
-                  <p className="text-sm text-gray-600 cursor-auto ml-2">
-                    {formatMoney(price + (price * discount) / 100)}VNĐ
+                  <p className="text-sm text-gray-400 cursor-auto ml-2">
+                    {formatMoney(price + (price * discount) / 100)} VNĐ
                   </p>
                 </del>
-                <div className="ml-auto">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    width={20}
-                    height={20}
-                    fill="currentColor"
-                    className="bi bi-bag-plus"
-                    viewBox="0 0 16 16"
-                  >
-                    <path
-                      fillRule="evenodd"
-                      d="M8 7.5a.5.5 0 0 1 .5.5v1.5H10a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0v-1.5H6a.5.5 0 0 1 0-1h1.5V8a.5.5 0 0 1 .5-.5z"
-                    />
-                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1zm3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4h-3.5zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V5z" />
-                  </svg>
-                </div>
               </div>
             </div>
           </Link>

@@ -13,7 +13,10 @@ function Toast({ toast: { message, type }, resetMessage }: ToastAction) {
     type === TOAST_SUCCESS && toast.success(message);
     type === TOAST_ERROR && toast.error(message);
     type === TOAST_INFO && toast.info(message);
-    message && resetMessage();
+    const resetMes = message && setTimeout(() => resetMessage(), 7000);
+    return () => {
+      clearTimeout(resetMes);
+    };
   }, [message]);
 
   return <ToastContainer />;

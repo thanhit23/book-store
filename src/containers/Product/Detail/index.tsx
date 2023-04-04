@@ -1,36 +1,62 @@
-import ProductDetailComponent from '../../../components/ProductDetail';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, compose } from 'redux';
-import { useParams } from 'react-router-dom';
-import { getListProduct } from './actions';
-import { useEffect } from 'react';
-import injectSaga from '../../../utils/injectSaga';
+import { useNavigate, useParams } from 'react-router-dom';
+
 import saga from './saga';
 import { Props } from './types';
-import injectReducer from '../../../utils/injectReducer';
+import Header from '../../Header';
 import reducer from '../List/reducer';
+import {
+  getListProduct,
+  commentProduct as commentProductAction,
+  getListComment as getListCommentAction,
+} from './actions';
+import Comment from '../../../components/Comment';
+import injectSaga from '../../../utils/injectSaga';
+import injectReducer from '../../../utils/injectReducer';
+import ProductDetailComponent from '../../../components/ProductDetail';
 
-function ProductDetail({ getProduct, detail }: Props) {
-  const { id } = useParams();
+function ProductDetail({ getProduct, detail, auth, comment, commentProduct, getListComment }: Props) {
+  const { id = '' } = useParams();
+  const redirect = useNavigate();
+  const callback = () => redirect(`/product/${id}`);
 
   useEffect(() => {
     getProduct(id);
+    getListComment(id);
   }, []);
 
-  return <ProductDetailComponent product={detail} />;
+  const handleAddComment = (data: object) => {
+    if (!auth) return redirect('/login');
+    commentProduct({ ...data, userId: auth?._id, bookId: id }, callback);
+  };
+
+  return (
+    <div>
+      <Header />
+      <ProductDetailComponent product={detail} />
+      <Comment onSubmit={handleAddComment} listComment={comment} />
+    </div>
+  );
 }
 
 const mapStateToProps = (state: any) => {
   const {
-    product: { detail },
+    product: { detail, comment },
+    global: { auth },
   } = state;
   return {
+    comment,
     detail,
+    auth,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => ({
   getProduct: bindActionCreators(getListProduct, dispatch),
+  commentProduct: bindActionCreators(commentProductAction, dispatch),
+  getListComment: bindActionCreators(getListCommentAction, dispatch),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

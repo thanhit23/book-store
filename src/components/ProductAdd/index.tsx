@@ -3,14 +3,15 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import Header from '../../containers/Header';
-import { HandleSubmitType, PropsAddProductComponent } from '../../containers/Admin/AddProduct/types';
 import Navigation from '../Admin/Navigation';
+import { HandleSubmitType, PropsAddProductComponent } from '../../containers/Admin/AddProduct/types';
 
 function AddProduct({ onSubmit }: PropsAddProductComponent) {
   const loginValidationSchema = Yup.object().shape({
-    name: Yup.string().required(),
-    price: Yup.number().required(),
-    discount: Yup.number().required(),
+    name: Yup.string().required('Field is required'),
+    price: Yup.number().required('Field is required'),
+    discount: Yup.number().required('Field is required'),
+    description: Yup.string().required('Field is required'),
     file: Yup.mixed().test('required', 'You need to provide a file', file => !!file),
   });
 
@@ -23,7 +24,7 @@ function AddProduct({ onSubmit }: PropsAddProductComponent) {
     resolver: yupResolver(loginValidationSchema),
   });
 
-  const { name, price, discount, file } = errors;
+  const { name, price, discount, file, description } = errors;
 
   const handleSubmitForm = (data: HandleSubmitType) => {
     onSubmit(data);
@@ -93,6 +94,19 @@ function AddProduct({ onSubmit }: PropsAddProductComponent) {
                           {...register('discount')}
                         />
                         <span className="text-red-500">{discount?.message}</span>
+                      </div>
+                      <div className="mb-4">
+                        <label className="block text-grey-darker text-sm font-bold mb-2" htmlFor="description">
+                          Description
+                        </label>
+                        <textarea
+                          className="appearance-none border rounded w-full py-2 px-3 text-grey-darker"
+                          id="description"
+                          rows={6}
+                          placeholder="Your product description"
+                          {...register('description')}
+                        />
+                        <span className="text-red-500">{description?.message}</span>
                       </div>
                     </div>
                     <div className="flex items-center justify-between mt-8">
