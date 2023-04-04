@@ -103,7 +103,7 @@ function Comment({ onSubmit, listComment }: Props) {
     );
 
   return (
-    <div className="py-24 2xl:py-44 bg-blueGray-100 rounded-t-10xl overflow-hidden">
+    <div className="py-20 2xl:py-44 bg-blueGray-100 rounded-t-10xl overflow-hidden">
       <div className="container px-4 mx-auto ">
         <div className="p-5 shadow-[rgba(43,52,69,0.1)_0px_4px_16px] rounded-t-8xl rounded-b-5xl bg-white">
           <div className="mb-3 flex">
