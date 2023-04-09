@@ -15,12 +15,13 @@ import {
   DeleteProduct,
 } from './types';
 
-export const getListProduct = () =>
+export const getListProduct = (page: number) =>
   <GetListProduct>{
     type: GET_LIST_PRODUCT_ADMIN_REQUEST,
+    payload: { page },
   };
 
-export const getListProductSuccess = (data: []) =>
+export const getListProductSuccess = (data: object) =>
   <GetListProductSuccess>{
     type: GET_LIST_PRODUCT_ADMIN_SUCCESS,
     payload: { data },

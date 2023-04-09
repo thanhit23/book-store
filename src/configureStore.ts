@@ -12,7 +12,6 @@ export default function configureStore(initialState = {}) {
 
   const sagaMiddleware = createSagaMiddleware(reduxSagaMonitorOptions);
   if (process.env.NODE_ENV !== 'production' && typeof window === 'object') {
-    /* eslint-disable no-underscore-dangle */
     if ((window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__)
       composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({});
 

@@ -1,8 +1,14 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { getProduct, addComment, getComments } from './service';
-import { GET_PRODUCT_REQUEST, ADD_COMMENT_REQUEST, GET_LIST_COMMENT_REQUEST } from './constants';
-import { ResponseGenerator, GetProductDetailType, AddCommentProductType, GetListCommentType } from './types';
+import { getProduct, addComment, getComments, editComment as editCommentService } from './service';
+import { GET_PRODUCT_REQUEST, ADD_COMMENT_REQUEST, GET_LIST_COMMENT_REQUEST, EDIT_COMMENT_REQUEST } from './constants';
+import {
+  ResponseGenerator,
+  GetProductDetailType,
+  AddCommentProductType,
+  GetListCommentType,
+  EditCommentType,
+} from './types';
 import {
   getListProductFailed,
   getListProductSuccess,
@@ -10,6 +16,8 @@ import {
   commentProductFailed,
   getListCommentSuccess,
   getListCommentFailed,
+  commentEditSuccess,
+  commentEditFailed,
 } from './actions';
 
 function* getProductDetail({ payload: { id } }: GetProductDetailType) {
@@ -55,8 +63,24 @@ function* getListComment({ payload: { id } }: GetListCommentType) {
   }
 }
 
+function* editComment({ payload: { id, data, callback } }: EditCommentType) {
+  const res: ResponseGenerator = yield call(editCommentService, id, data);
+
+  const {
+    data: { status, message },
+  } = res;
+
+  if (status) {
+    callback();
+    yield put(commentEditSuccess('Edit Successfully'));
+  } else {
+    yield put(commentEditFailed(message));
+  }
+}
+
 export default function* productDetailSaga() {
   yield takeLatest(GET_PRODUCT_REQUEST, getProductDetail);
   yield takeLatest(ADD_COMMENT_REQUEST, addCommentProduct);
   yield takeLatest(GET_LIST_COMMENT_REQUEST, getListComment);
+  yield takeLatest(EDIT_COMMENT_REQUEST, editComment);
 }

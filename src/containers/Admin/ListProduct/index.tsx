@@ -11,12 +11,14 @@ import injectSaga from '../../../utils/injectSaga';
 import saga from './saga';
 import { Props, State } from './types';
 
-function ListProduct({ getListProduct, list, deleteProduct }: Props) {
+function ListProduct({ getListProduct, data, metaData, deleteProduct }: Props) {
   useEffect(() => {
-    getListProduct();
+    getListProduct(1);
   }, []);
 
   const handleDeleteProduct = (id: string) => deleteProduct(id);
+
+  const handleGetProduct = (page: number) => getListProduct(page);
 
   return (
     <>
@@ -24,7 +26,14 @@ function ListProduct({ getListProduct, list, deleteProduct }: Props) {
       <Navigation />
       <div className="mt-3">
         <div className="max-w-7xl mx-auto px-4">
-          {list && <ProductList listProduct={list} deleteProduct={handleDeleteProduct} />}
+          {data && (
+            <ProductList
+              listProduct={data}
+              getProduct={handleGetProduct}
+              metaData={metaData}
+              deleteProduct={handleDeleteProduct}
+            />
+          )}
         </div>
       </div>
     </>
@@ -34,11 +43,14 @@ function ListProduct({ getListProduct, list, deleteProduct }: Props) {
 const mapStateToProps = (state: State) => {
   const {
     admin: {
-      product: { list },
+      product: {
+        list: { data, metaData },
+      },
     },
   } = state;
   return {
-    list,
+    data,
+    metaData,
   };
 };
 

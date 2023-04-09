@@ -1,12 +1,12 @@
 import { call, put, takeLatest } from 'redux-saga/effects';
 
-import { ResponseGenerator, Action } from './types';
+import { ResponseGenerator, Action, GetListProductAction } from './types';
 import { DELETE_PRODUCT_ADMIN_REQUEST, GET_LIST_PRODUCT_ADMIN_REQUEST } from './constants';
 import { getListProduct as getListProductService, deleteProduct as deleteProductService } from './service';
 import { getListProductSuccess, getListProductFailed, deleteProductSuccess, deleteProductFailed } from './actions';
 
-function* getListProduct() {
-  const res: ResponseGenerator = yield call(getListProductService);
+function* getListProduct({ payload: { page } }: GetListProductAction) {
+  const res: ResponseGenerator = yield call(getListProductService, page);
   const {
     data: { data, status, message },
   } = res;
