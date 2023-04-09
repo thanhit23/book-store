@@ -1,8 +1,9 @@
 import { Link } from 'react-router-dom';
 
+import { Props } from './types';
 import { formatMoney } from '../../helper';
 
-export default function ProductList({ list }: { list: [] }) {
+export default function ProductList({ list }: Props) {
   return (
     <>
       {list.map(({ name, price, images, discount, _id }, i) => (
@@ -18,7 +19,7 @@ export default function ProductList({ list }: { list: [] }) {
                 <p className="text-[14px] font-semibold text-[#c92127] cursor-auto my-3">{formatMoney(price)} VNĐ</p>
                 <del>
                   <p className="text-sm text-gray-400 cursor-auto ml-2">
-                    {formatMoney(price + (price * discount) / 100)} VNĐ
+                    {formatMoney(Math.round(price + (price * discount) / 100))} VNĐ
                   </p>
                 </del>
               </div>

@@ -5,7 +5,10 @@ import { GET_LIST_COMMENT_SUCCESS, GET_PRODUCT_SUCCESS } from '../Detail/constan
 
 export const initialState = {
   detail: {},
-  list: [],
+  list: {
+    data: [],
+    metaData: {},
+  },
   comment: [],
 };
 
@@ -28,9 +31,10 @@ const appReducer = (state = initialState, action: Action) =>
       case GET_LIST_PRODUCT_SUCCESS:
         {
           const {
-            payload: { data },
+            payload: { data, meta },
           } = action;
-          draft.list = data;
+          draft.list.data = data;
+          draft.list.metaData = meta;
         }
         break;
       case GET_LIST_COMMENT_SUCCESS:

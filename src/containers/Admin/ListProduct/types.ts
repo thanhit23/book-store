@@ -8,26 +8,33 @@ import {
 } from './constants';
 
 export interface Props {
-  getListProduct: () => void;
-  list: [];
+  getListProduct: (page: number) => void;
+  data: [];
+  metaData: { totalPage: number; page: number };
   deleteProduct: (id: string) => void;
 }
 
 export interface State {
   admin: {
     product: {
-      list: [];
+      list: { data: []; metaData: object };
     };
   };
 }
 
+export interface GetListProductAction {
+  type: typeof GET_LIST_PRODUCT_ADMIN_REQUEST;
+  payload: { page: number };
+}
+
 export interface GetListProduct {
   type: typeof GET_LIST_PRODUCT_ADMIN_REQUEST;
+  payload: { page: number };
 }
 
 export interface GetListProductSuccess {
   type: typeof GET_LIST_PRODUCT_ADMIN_SUCCESS;
-  payload: { data: [] };
+  payload: { data: object };
 }
 
 export interface GetListProductFailed {
@@ -51,7 +58,7 @@ export interface DeleteProductFailed {
 
 export interface ResponseGenerator {
   data: {
-    data: [];
+    data: { data: [] };
     status: boolean;
     message: string;
   };

@@ -8,6 +8,9 @@ import {
   GET_LIST_COMMENT_REQUEST,
   GET_LIST_COMMENT_SUCCESS,
   GET_LIST_COMMENT_FAILED,
+  EDIT_COMMENT_REQUEST,
+  EDIT_COMMENT_SUCCESS,
+  EDIT_COMMENT_FAILED,
 } from './constants';
 import { Nullable } from '../../../common/types';
 
@@ -17,6 +20,7 @@ export interface Props {
   auth: Nullable<{ _id: string }>;
   comment: [];
   commentProduct: (data: object, callback: () => void) => void;
+  editComment: (id: string, data: object, callback: () => void) => void;
   getListComment: (id: string | undefined) => void;
 }
 
@@ -48,6 +52,20 @@ export interface CommentProductFailedAction {
   type: typeof ADD_COMMENT_FAILED;
 }
 
+export interface CommentEditAction {
+  type: typeof EDIT_COMMENT_REQUEST;
+  payload: { id: string; data: object; callback: () => void };
+}
+
+export interface CommentEditSuccessAction {
+  type: typeof EDIT_COMMENT_SUCCESS;
+  payload: { message: string };
+}
+
+export interface CommentEditFailedAction {
+  type: typeof EDIT_COMMENT_FAILED;
+}
+
 export interface GetListCommentRequest {
   type: typeof GET_LIST_COMMENT_REQUEST;
   payload: { id: string };
@@ -66,6 +84,7 @@ export interface ResponseGenerator {
   data: {
     data: [];
     status: boolean;
+    message: string;
   };
   status: number;
 }
@@ -78,6 +97,11 @@ export interface AddCommentProductType {
 export interface GetProductDetailType {
   type: typeof GET_PRODUCT_REQUEST;
   payload: { id: string };
+}
+
+export interface EditCommentType {
+  type: typeof EDIT_COMMENT_REQUEST;
+  payload: { id: string; data: object; callback: () => void };
 }
 
 export interface GetListCommentType {

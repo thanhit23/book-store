@@ -1,10 +1,12 @@
 import * as Yup from 'yup';
+import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ListComment, Props, SubmitForm } from './types';
 
-function Comment({ onSubmit, listComment }: Props) {
+function Comment({ onSubmit, onSubmitEdit, listComment, user: userIdAuth }: Props) {
+  const [isEditComment, setIsEditComment] = useState(false);
   const loginValidationSchema = Yup.object().shape({
     content: Yup.string().required(),
   });
@@ -19,6 +21,15 @@ function Comment({ onSubmit, listComment }: Props) {
     resolver: yupResolver(loginValidationSchema),
   });
 
+  const {
+    reset: resetEdit,
+    register: registerEdit,
+    handleSubmit: handleSubmitEdit,
+  } = useForm<SubmitForm>({
+    mode: 'onChange',
+    resolver: yupResolver(loginValidationSchema),
+  });
+
   const { content } = errors;
 
   const handleSubmitForm = (data: object) => {
@@ -26,9 +37,17 @@ function Comment({ onSubmit, listComment }: Props) {
     reset({ content: '' });
   };
 
+  const handleSubmitFormEdit = (id: string, data: object) => {
+    onSubmitEdit(id, data);
+    resetEdit({ content: '' });
+    setIsEditComment(!isEditComment);
+  };
+
+  const handleChangeEdit = () => setIsEditComment(!isEditComment);
+
   const renderComment = () =>
     listComment.length ? (
-      listComment.map(({ content, user, createdAt }: ListComment, i) => (
+      listComment.map(({ content, user, createdAt, _id, userId }: ListComment, i) => (
         <div key={i} className="mb-2 overflow-hidden">
           <div className="pt-3 pb-3 md:pb-1 px-4 md:px-16 bg-white bg-opacity-40">
             <div className="flex flex-wrap items-center">
@@ -85,9 +104,49 @@ function Comment({ onSubmit, listComment }: Props) {
             </div>
           </div>
           <div className="px-4 overflow-hidden md:px-16 bg-white">
-            <div className="flex flex-wrap">
-              <div className="w-full md:w-2/3 mb-6 md:mb-0">
-                <p className="max-w-2xl text-darkBlueGray-400 leading-loose">{content}</p>
+            <div className="flex">
+              <div className="w-full mb-6 md:mb-0 flex items-center gap-2">
+                {!isEditComment ? (
+                  <p className="max-w-2xl text-darkBlueGray-400 leading-loose">{content}</p>
+                ) : (
+                  <form key={i} className="w-1/2" onSubmit={handleSubmitEdit(data => handleSubmitFormEdit(_id, data))}>
+                    <div className="w-full">
+                      <textarea
+                        rows={6}
+                        id="first_name"
+                        className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        placeholder="My Comment"
+                        required
+                        {...registerEdit('content')}
+                      />
+                    </div>
+                    <div className="mt-4">
+                      <button
+                        type="submit"
+                        className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </form>
+                )}
+                <div>
+                  {userIdAuth === userId ? (
+                    <button
+                      className="bg-[#e7e7e7] hover:opacity-70 text-grey-darkest font-bold p-2 rounded-full inline-flex items-center"
+                      onClick={handleChangeEdit}
+                    >
+                      {!isEditComment ? (
+                        <i className="fa-solid fa-pen text-[#666]" />
+                      ) : (
+                        <i className="fa-solid fa-xmark text-[#666] w-[16px]" />
+                      )}
+                      {userId}
+                    </button>
+                  ) : (
+                    ''
+                  )}
+                </div>
               </div>
               <div className="w-full md:w-1/3 text-right">
                 <p className="mb-8 text-sm text-gray-300">{createdAt}</p>
@@ -102,6 +161,40 @@ function Comment({ onSubmit, listComment }: Props) {
       </div>
     );
 
+  const renderFormComment = () => (
+    <>
+      {listComment.map(({ userId }, i) => {
+        if (!(userIdAuth === userId))
+          return (
+            <form key={i} className="flex flex-col" onSubmit={handleSubmit(data => handleSubmitForm(data))}>
+              <div className="w-1/2">
+                <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 ">
+                  Write Comment
+                </label>
+                <textarea
+                  rows={6}
+                  id="first_name"
+                  className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  placeholder="My Comment"
+                  required
+                  {...register('content')}
+                />
+                <span className="text-red-500">{content?.message}</span>
+              </div>
+              <div className="mt-4">
+                <button
+                  type="submit"
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                >
+                  Submit
+                </button>
+              </div>
+            </form>
+          );
+      })}
+    </>
+  );
+
   return (
     <div className="py-20 2xl:py-44 bg-blueGray-100 rounded-t-10xl overflow-hidden">
       <div className="container px-4 mx-auto ">
@@ -110,30 +203,7 @@ function Comment({ onSubmit, listComment }: Props) {
             <h2 className="text-2xl border-b border-solid border-orange-600">Review</h2>
           </div>
           {renderComment()}
-          <form className="flex flex-col" onSubmit={handleSubmit(data => handleSubmitForm(data))}>
-            <div className="w-1/2">
-              <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 ">
-                Write Comment
-              </label>
-              <textarea
-                rows={6}
-                id="first_name"
-                className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                placeholder="My Comment"
-                required
-                {...register('content')}
-              />
-              <span className="text-red-500">{content?.message}</span>
-            </div>
-            <div className="mt-4">
-              <button
-                type="submit"
-                className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-              >
-                Submit
-              </button>
-            </div>
-          </form>
+          {renderFormComment()}
         </div>
       </div>
     </div>

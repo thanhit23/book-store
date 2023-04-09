@@ -11,19 +11,20 @@ import {
   getListProduct,
   commentProduct as commentProductAction,
   getListComment as getListCommentAction,
+  commentEdit as editCommentAction,
 } from './actions';
 import Comment from '../../../components/Comment';
 import injectSaga from '../../../utils/injectSaga';
 import injectReducer from '../../../utils/injectReducer';
 import ProductDetailComponent from '../../../components/ProductDetail';
+import Footer from '../../../components/Footer';
 
-function ProductDetail({ getProduct, detail, auth, comment, commentProduct, getListComment }: Props) {
+function ProductDetail({ getProduct, detail, auth, comment, commentProduct, getListComment, editComment }: Props) {
   const { id = '' } = useParams();
   const redirect = useNavigate();
   const callback = () => getListComment(id);
 
   useEffect(() => {
-    console.log(12312312);
     getProduct(id);
     getListComment(id);
   }, []);
@@ -33,11 +34,17 @@ function ProductDetail({ getProduct, detail, auth, comment, commentProduct, getL
     commentProduct({ ...data, userId: auth?._id, bookId: id }, callback);
   };
 
+  const handleEditComment = (idComment: string, data: object) => {
+    if (!auth) return redirect('/login');
+    editComment(idComment, { ...data, userId: auth?._id, bookId: id }, callback);
+  };
+
   return (
     <div>
       <Header />
       <ProductDetailComponent product={detail} />
-      <Comment onSubmit={handleAddComment} listComment={comment} />
+      <Comment onSubmitEdit={handleEditComment} onSubmit={handleAddComment} listComment={comment} user={auth?._id} />
+      <Footer />
     </div>
   );
 }
@@ -58,6 +65,7 @@ const mapDispatchToProps = (dispatch: any) => ({
   getProduct: bindActionCreators(getListProduct, dispatch),
   commentProduct: bindActionCreators(commentProductAction, dispatch),
   getListComment: bindActionCreators(getListCommentAction, dispatch),
+  editComment: bindActionCreators(editCommentAction, dispatch),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
