@@ -5,7 +5,7 @@ import { bindActionCreators, compose } from 'redux';
 
 import saga from './saga';
 import reducer from './reducer';
-import { Props } from './types';
+import { Props, State } from './types';
 import { getListProduct } from './actions';
 import injectSaga from '../../../utils/injectSaga';
 import injectReducer from '../../../utils/injectReducer';
@@ -13,9 +13,11 @@ import ProductList from '../../../components/ProductList';
 
 function ListProduct({ getProduct, list, metaData }: Props) {
   const [page, setPage] = useState(1);
+
   useEffect(() => {
     getProduct(page);
   }, [page]);
+
   const arrTotalPage = Array.from(Array(metaData.totalPage).keys());
 
   const handleGetProduct = (pageCurrent: number) => setPage(pageCurrent);
@@ -31,7 +33,7 @@ function ListProduct({ getProduct, list, metaData }: Props) {
           <h2 className="text-xl font-bold border-[#d31f0333] border-b border-solid text-[25px] pb-3">Product</h2>
         </div>
         <div className="w-fit mx-auto grid grid-cols-1 lg:grid-cols-5 md:grid-cols-2 justify-items-center justify-center gap-y-6 gap-x-6 mb-10">
-          {list && <ProductList list={list} />}
+          <ProductList list={list} />
         </div>
         <nav aria-label="Page navigation example" className="flex justify-center">
           <ul className="inline-flex items-center -space-x-px">
@@ -101,7 +103,7 @@ function ListProduct({ getProduct, list, metaData }: Props) {
   );
 }
 
-const mapStateToProps = (state: { product: { list: { data: []; metaData: object } } }) => {
+const mapStateToProps = (state: State) => {
   const {
     product: {
       list: { data: list, metaData },

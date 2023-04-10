@@ -5,7 +5,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import { ListComment, Props, SubmitForm } from './types';
 
-function Comment({ onSubmit, onSubmitEdit, listComment, user: userIdAuth }: Props) {
+function ReviewProductDetail({ onSubmit, onSubmitEdit, listComment, user: userIdAuth }: Props) {
   const [isEditComment, setIsEditComment] = useState(false);
   const loginValidationSchema = Yup.object().shape({
     content: Yup.string().required(),
@@ -141,7 +141,6 @@ function Comment({ onSubmit, onSubmitEdit, listComment, user: userIdAuth }: Prop
                       ) : (
                         <i className="fa-solid fa-xmark text-[#666] w-[16px]" />
                       )}
-                      {userId}
                     </button>
                   ) : (
                     ''
@@ -161,53 +160,49 @@ function Comment({ onSubmit, onSubmitEdit, listComment, user: userIdAuth }: Prop
       </div>
     );
 
-  const renderFormComment = () => (
-    <>
-      {listComment.map(({ userId }, i) => {
-        if (!(userIdAuth === userId))
-          return (
-            <form key={i} className="flex flex-col" onSubmit={handleSubmit(data => handleSubmitForm(data))}>
-              <div className="w-1/2">
-                <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 ">
-                  Write Comment
-                </label>
-                <textarea
-                  rows={6}
-                  id="first_name"
-                  className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  placeholder="My Comment"
-                  required
-                  {...register('content')}
-                />
-                <span className="text-red-500">{content?.message}</span>
-              </div>
-              <div className="mt-4">
-                <button
-                  type="submit"
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                >
-                  Submit
-                </button>
-              </div>
-            </form>
-          );
-      })}
-    </>
+  const formComment = () => (
+    <form className="flex flex-col" onSubmit={handleSubmit(data => handleSubmitForm(data))}>
+      <div className="w-1/2">
+        <label htmlFor="first_name" className="block mb-2 text-sm font-medium text-gray-900 ">
+          Write Comment
+        </label>
+        <textarea
+          rows={6}
+          id="first_name"
+          className="bg-gray-50 border border-gray-300 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          placeholder="My Comment"
+          required
+          {...register('content')}
+        />
+        <span className="text-red-500">{content?.message}</span>
+      </div>
+      <div className="mt-4">
+        <button
+          type="submit"
+          className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Submit
+        </button>
+      </div>
+    </form>
   );
 
+  const renderFormComment = () => {
+    if (listComment.length) {
+      return listComment.map(({ userId }) => {
+        if (!(userIdAuth === userId)) return <>{formComment()}</>;
+      });
+    } else {
+      return <>{formComment()}</>;
+    }
+  };
+
   return (
-    <div className="py-20 2xl:py-44 bg-blueGray-100 rounded-t-10xl overflow-hidden">
-      <div className="container px-4 mx-auto ">
-        <div className="p-5 shadow-[rgba(43,52,69,0.1)_0px_4px_16px] rounded-t-8xl rounded-b-5xl bg-white">
-          <div className="mb-3 flex">
-            <h2 className="text-2xl border-b border-solid border-orange-600">Review</h2>
-          </div>
-          {renderComment()}
-          {renderFormComment()}
-        </div>
-      </div>
-    </div>
+    <>
+      {renderComment()}
+      {renderFormComment()}
+    </>
   );
 }
 
-export default Comment;
+export default ReviewProductDetail;

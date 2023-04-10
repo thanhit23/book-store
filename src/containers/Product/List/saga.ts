@@ -13,7 +13,6 @@ function* getListProduct({ payload: { page } }: Action) {
     const {
       data: { data: dataRes, page, limit, totalPage },
     } = data;
-    console.log(data);
     yield put(getListProductSuccess(dataRes, { page, limit, totalPage }));
   } else {
     const { message } = data;
