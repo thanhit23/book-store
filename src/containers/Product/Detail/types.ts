@@ -16,7 +16,7 @@ import { Nullable } from '../../../common/types';
 
 export interface Props {
   getProduct: (id: string) => void;
-  detail: { name: string; price: number; discount: number; images: [string] };
+  detail: { name: string; price: number; discount: number; images: [string]; description: string };
   auth: Nullable<{ _id: string }>;
   comment: [];
   commentProduct: (data: object, callback: () => void) => void;

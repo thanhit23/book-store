@@ -9,6 +9,15 @@ export interface Props {
   };
 }
 
+export interface State {
+  product: {
+    list: { data: []; metaData: object };
+  };
+  global: {
+    loading: { showLoading: boolean };
+  };
+}
+
 export interface GetListProduct {
   type: typeof GET_LIST_PRODUCT_REQUEST;
   payload: { page: number };

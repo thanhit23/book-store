@@ -5,6 +5,7 @@ import './styles.css';
 import routes from '../../routes';
 import ToastMessages from '../ToastMessages';
 import LoadingIndicator from '../LoadingIndicator';
+import 'react-loading-skeleton/dist/skeleton.css';
 
 function App() {
   return (
