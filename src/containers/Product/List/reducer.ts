@@ -17,7 +17,7 @@ interface Action {
   payload?: any;
 }
 
-const appReducer = (state = initialState, action: Action) =>
+const product = (state = initialState, action: Action) =>
   produce(state, draft => {
     switch (action.type) {
       case GET_PRODUCT_SUCCESS:
@@ -50,4 +50,4 @@ const appReducer = (state = initialState, action: Action) =>
     }
   });
 
-export default appReducer;
+export default product;
