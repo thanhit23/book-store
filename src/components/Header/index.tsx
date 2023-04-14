@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom';
 
 import { Props } from './types';
+import { useState } from 'react';
 
 function Header({ auth, logout }: Props) {
+  const [valueInput, setValueInput] = useState('');
   const handleLogout = () => logout();
+  const handleChangeInput = ({ target: { value } }: { target: { value: string } }) => {
+    setValueInput(value);
+  };
   return (
     <div className="bg-white shadow-sm sticky top-0 z-[100]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-1 md:py-4">
@@ -44,16 +49,19 @@ function Header({ auth, logout }: Props) {
                 <input
                   type="search"
                   id="default-search"
-                  className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg  focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  className="block w-full p-4 pl-10 text-sm text-gray-900 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500"
                   placeholder="Search Mockups, Logos..."
                   required
+                  value={valueInput}
+                  onChange={handleChangeInput}
                 />
-                <button
+                <Link
+                  to={`/product/search/${valueInput}`}
                   type="submit"
                   className="text-white absolute right-2.5 bottom-2.5 bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
                 >
                   Search
-                </button>
+                </Link>
               </div>
             </div>
           </div>
